@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import './Navbar.css'
 import logo from '../assets/logo.png'
 import cart_icon from '../assets/cart_icon.png'
+import { Link } from 'react-router-dom'
+import { ShopContext } from '../../context/ShopContext'
 
 export const Navbar = () => {
   const [menu, setMenu] = React.useState('shop')
+  const {getTotalCartItems} = useContext(ShopContext)
   return (
     <div className='navbar'>
       <div className='nav-logo'>
@@ -12,15 +15,15 @@ export const Navbar = () => {
           <p>SHOPPER</p>
       </div>
       <ul className='nav-menu'>
-        <li onClick={() => {setMenu('shop')}}>Shop {menu === 'shop' ? <hr /> : <></>}</li>
-        <li onClick={() => {setMenu('mens')}}>Men {menu === 'mens' ? <hr /> : <></>}</li>
-        <li onClick={() => {setMenu('womens')}}>Women {menu === 'womens' ? <hr /> : <></>}</li>
-        <li onClick={() => {setMenu('kids')}}>Kids {menu === 'kids' ? <hr /> : <></>}</li>
+        <li onClick={() => {setMenu('shop')}}><Link style={{textDecoration : 'none'}} to='/'>Shop</Link> {menu === 'shop' ? <hr /> : <></>}</li>
+        <li onClick={() => {setMenu('mens')}}><Link style={{textDecoration : 'none'}} to='/mens'>Men</Link> {menu === 'mens' ? <hr /> : <></>}</li>
+        <li onClick={() => {setMenu('womens')}}><Link style={{textDecoration : 'none'}} to='/womens'>Women</Link> {menu === 'womens' ? <hr /> : <></>}</li>
+        <li onClick={() => {setMenu('kids')}}><Link style={{textDecoration : 'none'}} to='/kids'>Kids</Link> {menu === 'kids' ? <hr /> : <></>}</li>
       </ul>
       <div className='nav-login-cart'>
-          <button>Login</button>
-          <img src={cart_icon} alt=''></img>
-          <div className='nav-cart-count'>0</div>
+          <Link to='/login'><button>Login</button></Link>
+          <Link to='/cart'><img src={cart_icon} alt=''></img></Link>
+          <div className='nav-cart-count'>{getTotalCartItems()}</div>
       </div>
     </div>
   )
